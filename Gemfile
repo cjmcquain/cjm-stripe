@@ -10,6 +10,8 @@ gem 'sqlite3', group: [:development, :test]
 # Add 12 factor for Heroku
 gem 'rails_12factor', group: :production
 
+# Use bootstrap for improving site look/feel
+gem 'bootstrap-sass'
 
 gem 'pg', group: :production
 # Use SCSS for stylesheets
