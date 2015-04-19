@@ -18,6 +18,7 @@ gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 # Figaro gem for securely managing credentials
 gem 'figaro'
+gem 'letter_opener', group: :development
 
 gem 'pg', group: :production
 # Use SCSS for stylesheets
