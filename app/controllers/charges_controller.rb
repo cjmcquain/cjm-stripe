@@ -1,29 +1,30 @@
+
 class ChargesController < ApplicationController
 	def create
-		product = Product.find_by_sku("GROHACK2")
+								product = Product.find(params[:product_id])
 
-	  customer = Stripe::Customer.create(
-	    :email => params[:stripeEmail],
-	    :card  => params[:stripeToken],
-	    :plan  => "GROHACK2"
-	  )
+							  customer = Stripe::Customer.create(
+							    :email => params[:stripeEmail],
+							    :card  => params[:stripeToken],
+							    :plan => "GROHACK2"
+							  )
 
-#	  charge = Stripe::Charge.create(
-#	    :customer    => customer.id,
-#	    :amount      => product.price_in_cents,
-#	    :description => 'Growth Hacking Crash Course',
-#	    :currency    => 'usd'
-#	  )
+							  # charge = Stripe::Charge.create(
+							  #   :customer    => customer.id,
+							  #   :amount      => product.price_in_cents,
+							  #   :description => product.full_description,
+							  #   :currency    => 'usd'
+							  # )
 
-	  purchase = Purchase.create(email: params[:stripeEmail], 
-	  	card: params[:stripeToken], amount: product.price_in_cents,
-	  	description: product.full_description, currency: 'usd', 
-	  	customer_id: customer.id, product_id: product.id, uuid: SecureRandom.uuid)
 
-	  redirect_to purchase
+							     purchase = Purchase.create(email: params[:stripeEmail], card: params[:stripeToken], 
+								 		amount: product.price_in_cents, description: product.full_description, currency: 'usd',
+								    customer_id: customer.id, product_id: product.id, uuid: SecureRandom.uuid)
 
-	rescue Stripe::CardError => e
-	  flash[:error] = e.message
-	  redirect_to charges_path
+										redirect_to purchase
+
+							rescue Stripe::CardError => e
+							  flash[:error] = e.message
+							  redirect_to charges_path
+							end
 	end
-end

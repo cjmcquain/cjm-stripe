@@ -1,16 +1,18 @@
 class Product < ActiveRecord::Base
-	def full_description
-		"#{self.title} #{self.subtitle}"
-	end
 
-	def thumbnail_image_name
+  def full_description
+    "#{self.title} #{self.subtitle}"
+  end
 
-		"product-#{title.split.slice(0..-2).join(" ").gsub(" ", "-").downcase}.png"
+  def price_in_cents
+    (self.price * 100).to_i
+  end
 
-	end
+  def thumbnail_image_name
+    "product-#{title.split.slice(0..-2).join(' ').gsub(' ','-').downcase}.png"
+  end
 
-
-	def price_in_cents
-		(self.price * 100).to_i
-	end
+  def header_image_name
+    "header-#{title.split.slice(0..-2).join(' ').gsub(' ','-').downcase}.png"
+  end
 end

@@ -1,16 +1,12 @@
 Rails.application.routes.draw do
-
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  root 'pages#home'
+  root 'products#index'
 
-  # Support stripe payments through charges
-  resources :charges 
-
-  # Route for showing products & purchases
-  resources :products, only: [:index]
+  # support stripe
+  resources :charges
   resources :purchases, only: [:show]
-
+  resources :products, only: [:index, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
